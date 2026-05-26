@@ -8,9 +8,14 @@ use App\Models\Position;
 class PositionController extends Controller
 {
     // Show all data
-    public function index()
+    public function index(Request $request)
     {
-        $positions = Position::all();
+        $query = Position::query();
+        if ($request->filled('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+        $positions = $query->paginate(10);
+        $positions->appends($request->all());
         return view('positions.index', compact('positions'));
     }
 

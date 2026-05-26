@@ -13,6 +13,20 @@
             <i class="bi bi-plus-square me-1"></i>Add New
         </a>
     </div>
+    <div class="d-flex justify-content-end align-items-center mb-3">
+
+        <!-- Search Form -->
+        <form method="GET" action="{{ route('positions.index') }}"
+            class="d-flex align-items-center bg-light p-2 px-3 rounded-3 shadow-sm">
+
+            <i class="bi bi-search text-muted me-2"></i>
+
+            <input type="text" id="searchInput" name="search" class="form-control border-0 bg-transparent shadow-none"
+                placeholder="Search by name..." value="{{ request('search') }}" style="width: 220px;">
+
+        </form>
+
+    </div>
     <div class="table-responsive">
         <table class="table table-hover align-middle">
             <thead class="table-dark">
@@ -32,11 +46,13 @@
                         {{ $position->name }}
                     </td>
                     <td>
-                        <a href="{{ route('positions.edit', $position->id) }}" class="btn btn-outline-success btn-sm rounded-pill px-3 shadow-sm me-1">
+                        <a href="{{ route('positions.edit', $position->id) }}"
+                            class="btn btn-outline-success btn-sm rounded-pill px-3 shadow-sm me-1">
                             <i class="bi bi-pencil"></i>
                         </a>
- 
-                        <button type="button" class="btn btn-outline-danger btn-sm rounded-pill px-3 shadow-sm" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $position->id }}">
+
+                        <button type="button" class="btn btn-outline-danger btn-sm rounded-pill px-3 shadow-sm"
+                            data-bs-toggle="modal" data-bs-target="#deleteModal{{ $position->id }}">
                             <i class="bi bi-trash"></i>
                         </button>
 
@@ -56,7 +72,8 @@
                                     </div>
 
                                     <div class="modal-footer border-0 justify-content-center pb-4">
-                                        <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">
+                                        <button type="button" class="btn btn-light rounded-pill px-4"
+                                            data-bs-dismiss="modal">
                                             បោះបង់
                                         </button>
                                         <form action="{{ route('positions.destroy', $position->id) }}" method="POST">
@@ -83,4 +100,17 @@
         </table>
     </div>
 </div>
+<script>
+let timeout = null;
+
+document.getElementById('searchInput').addEventListener('keyup', function() {
+
+    clearTimeout(timeout);
+
+    timeout = setTimeout(() => {
+        this.closest('form').submit();
+    }, 500); // delay 0.5s
+
+});
+</script>
 @endsection

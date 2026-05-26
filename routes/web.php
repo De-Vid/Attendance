@@ -8,6 +8,7 @@ use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\AttendanceSettingController;
 use App\Http\Controllers\AttendanceTypeController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 // ─── Public ──────────────────────────────────────────────────────────────────
@@ -63,3 +64,9 @@ Route::delete('/attendance-settings/delete/{id}', [AttendanceSettingController::
 
 // ─── AttendanceTypeController ────────────────────────────────────────────────────────────────────
 Route::resource('attendance_types', AttendanceTypeController::class);
+
+
+// ─── UserController ────────────────────────────────────────────────────────────────────
+// Added ->name('users.index') at the end here:
+Route::get('/users', [UserController::class, 'index'])->name('users.index');
+Route::post('/users/update-role/{id}', [UserController::class, 'updateRole'])->name('users.updateRole');

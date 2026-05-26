@@ -15,9 +15,16 @@ use Carbon\Carbon;
 class AttendanceController extends Controller
 {
     // 1. Show Employees
-public function index()
+public function index(Request $request)
 {
-    $employees = Employee::with('user')->latest()->paginate(7);
+    $query = Employee::with('user')->latest();
+    if ($request->filled('search')) {
+        $query->whereHas('user', function ($q) use ($request) {
+            $q->where('name', 'like', '%' . $request->search . '%');
+        });
+    }
+    $employees = $query->paginate(7);
+    $employees->appends($request->all());
     return view('attendance.index', compact('employees'));
 }
 
