@@ -196,9 +196,9 @@
 
             <div class="sidebar-brand">
                 @auth
-                    <a href="{{ route(Auth::user()->getDashboardRoute()) }}" class="brand-link text-white">
-                        <span class="fw-bold">ប្រព័ន្ធគ្រប់គ្រង</span>
-                    </a>
+                <a href="{{ route(Auth::user()->getDashboardRoute()) }}" class="brand-link text-white">
+                    <span class="fw-bold">ប្រព័ន្ធគ្រប់គ្រង</span>
+                </a>
                 @endauth
             </div>
 
@@ -209,55 +209,63 @@
                     <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview">
 
                         @auth
-                        
+
                         <li class="nav-item">
-                            <a href="{{ route(Auth::user()->getDashboardRoute()) }}" 
-                               class="nav-link {{ request()->routeIs('*.dashboard') ? 'active' : '' }}">
+                            <a href="{{ route(Auth::user()->getDashboardRoute()) }}"
+                                class="nav-link {{ request()->routeIs('*.dashboard') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-chart-line"></i>
                                 <p class="fw-bold">Dashboard</p>
                             </a>
                         </li>
 
                         @if(Auth::user()->isAdmin())
-                            <li class="nav-item">
-                                <a href="{{ route('employees.index') }}" 
-                                   class="nav-link {{ request()->routeIs('employees.*') ? 'active' : '' }}">
-                                    <i class="nav-icon fas fa-user-friends"></i>
-                                    <p class="fw-bold">Employees</p>
-                                </a>
-                            </li>
+                        <li class="nav-item">
+                            <a href="{{ route('check_attendances.index') }}"
+                                class="nav-link {{ request()->routeIs('check_attendances.*') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-calendar-check"></i>
+                                <p class="fw-bold">Check Attendance</p>
+                            </a>
+                        </li>
 
-                            <li class="nav-item">
-                                <a href="{{ route('positions.index') }}" 
-                                   class="nav-link {{ request()->routeIs('positions.*') ? 'active' : '' }}">
-                                    <i class="nav-icon fas fa-briefcase"></i>
-                                    <p class="fw-bold">Positions</p>
-                                </a>
-                            </li>
+                        <li class="nav-item">
+                            <a href="{{ route('employees.index') }}"
+                                class="nav-link {{ request()->routeIs('employees.*') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-user-friends"></i>
+                                <p class="fw-bold">Employees</p>
+                            </a>
+                        </li>
 
-                            <li class="nav-item">
-                                <a href="{{ route('attendance-settings.index') }}" 
-                                   class="nav-link {{ request()->routeIs('attendance-settings.*') ? 'active' : '' }}">
-                                    <i class="nav-icon fas fa-clock"></i>
-                                    <p class="fw-bold">Set Time</p>
-                                </a>
-                            </li>
+                        <li class="nav-item">
+                            <a href="{{ route('positions.index') }}"
+                                class="nav-link {{ request()->routeIs('positions.*') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-briefcase"></i>
+                                <p class="fw-bold">Positions</p>
+                            </a>
+                        </li>
 
-                            <li class="nav-item">
-                                <a href="{{ route('attendance_types.index') }}" 
-                                   class="nav-link {{ request()->routeIs('attendance_types.*') ? 'active' : '' }}">
-                                    <i class="nav-icon fas fa-user-clock"></i>
-                                    <p class="fw-bold">Time Work</p>
-                                </a>
-                            </li>
+                        <li class="nav-item">
+                            <a href="{{ route('attendance-settings.index') }}"
+                                class="nav-link {{ request()->routeIs('attendance-settings.*') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-clock"></i>
+                                <p class="fw-bold">Set Time</p>
+                            </a>
+                        </li>
 
-                            <li class="nav-item">
-                                <a href="{{ route('users.index') }}" 
-                                   class="nav-link {{ request()->routeIs('users.*') ? 'active' : '' }}">
-                                    <i class="nav-icon fas fa-user"></i>
-                                    <p class="fw-bold">Users</p>
-                                </a>
-                            </li>
+                        <li class="nav-item">
+                            <a href="{{ route('attendance_types.index') }}"
+                                class="nav-link {{ request()->routeIs('attendance_types.*') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-user-clock"></i>
+                                <p class="fw-bold">Set Day</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{ route('users.index') }}"
+                                class="nav-link {{ request()->routeIs('users.*') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-user"></i>
+                                <p class="fw-bold">Users</p>
+                            </a>
+                        </li>
                         @endif
 
                         @endauth

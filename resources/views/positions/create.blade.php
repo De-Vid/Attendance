@@ -4,7 +4,7 @@
 
 @section('content')
 
-<div class="container bg-white p-4 rounded shadow-sm">
+<div class="container-fluid bg-white p-4 rounded shadow-sm">
 
     <h2 class="mb-4">
         ចុះឈ្មោះតួនាទី

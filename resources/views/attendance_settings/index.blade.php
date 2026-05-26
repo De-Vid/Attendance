@@ -7,7 +7,7 @@
 <div class="container-fluid bg-white p-4 rounded-4 shadow-sm">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
-            <h4 class="fw-bold mb-1">Time</h4>
+            <h4 class="fw-bold mb-1">Clock Settings</h4>
         </div>
         <a href="{{ route('attendance-settings.create') }}" class="btn btn-primary rounded-pill px-4 py-2 shadow-sm fw-semibold">
             <i class="bi bi-plus-square me-1"></i>Add New

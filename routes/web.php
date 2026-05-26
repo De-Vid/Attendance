@@ -9,6 +9,7 @@ use App\Http\Controllers\PositionController;
 use App\Http\Controllers\AttendanceSettingController;
 use App\Http\Controllers\AttendanceTypeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CheckAttendanceController;
 use Illuminate\Support\Facades\Route;
 
 // ─── Public ──────────────────────────────────────────────────────────────────
@@ -69,4 +70,11 @@ Route::resource('attendance_types', AttendanceTypeController::class);
 // ─── UserController ────────────────────────────────────────────────────────────────────
 // Added ->name('users.index') at the end here:
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
-Route::post('/users/update-role/{id}', [UserController::class, 'updateRole'])->name('users.updateRole');
+Route::post('/users/update-role/{id}', [UserController::class, 'updateRole'])
+->name('users.updateRole');
+
+// ─── 
+// CheckAttendance─────────────────────────────────────
+Route::get('/check-attendances', [CheckAttendanceController::class, 'index'])
+->name('check_attendances.index');
+Route::get('/check-attendances/employee/{employee_id}', [CheckAttendanceController::class, 'check'])->name('check_attendances.check');
