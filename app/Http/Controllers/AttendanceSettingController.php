@@ -6,11 +6,12 @@ use Illuminate\Http\Request;
 
 class AttendanceSettingController extends Controller
 {
-    public function index()
-    {
-        $settings = AttendanceSetting::all();
-        return view('attendance_settings.index', compact('settings'));
-    }
+public function index()
+{
+    // Change .all() to .paginate() to enable pagination features
+    $settings = AttendanceSetting::paginate(10);
+    return view('attendance_settings.index', compact('settings'));
+}
 
     // Show create page
     public function create()

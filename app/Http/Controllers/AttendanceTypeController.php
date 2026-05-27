@@ -6,11 +6,12 @@ use Illuminate\Http\Request;
 
 class AttendanceTypeController extends Controller
 {
-        public function index()
-    {
-        $settings_type = AttendanceType::all();
-        return view('attendance_types.index', compact('settings_type'));
-    }
+public function index()
+{
+    $settings_type = AttendanceType::paginate(10);
+
+    return view('attendance_types.index', compact('settings_type'));
+}
 
     // Show create page
     public function create()

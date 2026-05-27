@@ -1,320 +1,187 @@
 @extends('layouts.app')
 
-@section('title', 'User Roles')
+@section('title', 'User Roles & Permissions')
 
 @section('content')
-
-<div class="container-fluid bg-white p-4 rounded-4 shadow-sm">
-
-    {{-- HEADER + SEARCH --}}
-    <div class="d-flex justify-content-between align-items-center mb-3">
-
-        <h4 class="fw-bold mb-0">User Roles</h4>
-
-        <form method="GET"
-              action="{{ route('users.index') }}"
-              class="d-flex align-items-center bg-light p-2 px-3 rounded-3 shadow-sm">
-
-            <i class="bi bi-search text-muted me-2"></i>
-
-            <input type="text"
-                   id="searchInput"
-                   name="search"
-                   class="form-control border-0 bg-transparent shadow-none"
-                   placeholder="Search by name..."
-                   value="{{ request('search') }}"
-                   style="width: 220px;">
-
-        </form>
-
-    </div>
-
-    {{-- TABLE --}}
-    <div class="table-responsive">
-
-        <table class="table table-hover align-middle">
-
-            <thead class="table-dark">
-                <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Role</th>
-                    <th>Update Role</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-
-            <tbody>
-
-                @forelse($users as $user)
-
-                <tr>
-
-                    <td>{{ $user->name }}</td>
-                    <td>{{ $user->email }}</td>
-
-                    <td>
-                        <span class="badge bg-primary">
-                            {{ ucfirst($user->role) }}
-                        </span>
-                    </td>
-
-                    {{-- FORM --}}
-                    <td>
-                        <form id="form{{ $user->id }}"
-                              action="{{ route('users.updateRole', $user->id) }}"
-                              method="POST">
-                            @csrf
-
-                            <select name="role" class="form-select">
-                                <option value="staff" {{ $user->role == 'staff' ? 'selected' : '' }}>Staff</option>
-                                <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>Admin</option>
-                                <option value="leader" {{ $user->role == 'leader' ? 'selected' : '' }}>Leader</option>
-                            </select>
-                        </form>
-                    </td>
-
-                    {{-- ACTION --}}
-                    <td>
-                        <button type="button"
-                                class="btn btn-success"
-                                onclick="openModal({{ $user->id }}, '{{ $user->name }}')">
-
-                            <i class="bi bi-pencil-square"></i>
-
-                        </button>
-                    </td>
-
-                </tr>
-
-                @empty
-
-                <tr>
-                    <td colspan="5" class="text-center text-muted py-5">
-                        <i class="bi bi-inbox fs-3 d-block mb-2"></i>
-                        មិនទាន់មានទិន្នន័យ
-                    </td>
-                </tr>
-
-                @endforelse
-
-            </tbody>
-
-        </table>
-
-    </div>
-
-    {{-- PAGINATION --}}
-    <div class="d-flex justify-content-end mt-4">
-        {{ $users->links() }}
-    </div>
-
-</div>
-
-{{-- ========================= --}}
-{{-- MODAL UI (MODERN STANDARD) --}}
-{{-- ========================= --}}
-<div class="modal-overlay" id="customModal" onclick="closeModalOnOverlay(event)">
-
-    <div class="modal-box">
-
-        <div class="modal-icon-wrapper">
-            <i class="bi bi-exclamation-circle-fill"></i>
+<div class="container-fluid">
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-body p-4">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center">
+                <div class="mb-3 mb-md-0">
+                    <h4 class="fw-bold text-dark mb-1" style="font-family: 'Kantumruy Pro', sans-serif;">
+                        <i class="fas fa-users text-success me-2"></i>User Roles
+                    </h4>
+                    <p class="text-muted small mb-0">
+                        ទំព័រផ្ទៀងផ្ទាត់ការគ្រប់គ្រងតួនាទីនៃអ្នកប្រើប្រាស់
+                    </p>
+                </div>
+            </div>
         </div>
+    </div>
 
-        <div class="modal-title">
-            បញ្ជាក់ការផ្លាស់ប្តូរ
-        </div>
+    {{-- TABLE CARD --}}
+    <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body p-0">
+            @if(request()->has('employee_id') && isset($specificEmployee))
+            <div
+                class="alert alert-info mx-4 mt-4 rounded-3 d-flex justify-content-between align-items-center border-0 shadow-sm">
+                <div>
+                    <i class="bi bi-info-circle-fill me-2"></i>កំពុងបង្ហាញប្រវត្តវត្តមានរបស់៖
+                    <strong>{{ $specificEmployee->user->name }}</strong>
+                </div>
 
-        <div class="modal-text" id="modalText">
+                <a href="{{ route('users.index') }}" class="btn btn-sm btn-dark rounded-3 px-3">
+                    មើលទាំងអស់
+                </a>
             </div>
 
-        <div class="btn-group-modal">
+            @endif
 
-            <button class="btn-modal btn-cancel" onclick="closeModal()">
-                បោះបង់
-            </button>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light text-secondary">
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th width="300">Update Role</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($users as $user)
+                        <tr>
+                            <td>{{ $user->name }}</td>
+                            <td>{{ $user->email }}</td>
+                            <td>
+                                <span class="badge bg-primary">
+                                    {{ ucfirst($user->role) }}
+                                </span>
+                            </td>
+                            <td>
+                                <form id="updateRoleForm{{ $user->id }}" action="{{ route('users.updateRole', $user->id) }}" method="POST" class="d-flex gap-2 align-items-center">
 
-            <button class="btn-modal btn-confirm" id="confirmBtn">
-                យល់ព្រមបច្ចុប្បន្នភាព
-            </button>
+                                    @csrf
 
+                                    <select name="role" class="form-select form-select-sm">
+                                        <option value="staff" {{ $user->role == 'staff' ? 'selected' : '' }}>
+                                            Staff
+                                        </option>
+                                        <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>
+                                            Admin
+                                        </option>
+                                        <option value="leader" {{ $user->role == 'leader' ? 'selected' : '' }}>
+                                            Leader
+                                        </option>
+                                    </select>
+
+                                    <button type="button" class="btn btn-success btn-sm rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#confirmModal{{ $user->id }}">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </button>
+                                </form>
+
+                                <div class="modal fade" id="confirmModal{{ $user->id }}" tabindex="-1" aria-labelledby="confirmModalLabel{{ $user->id }}" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content border-0 shadow rounded-4">
+                                            <div class="modal-header bg-success text-white border-0">
+                                                <h5 class="modal-title" id="confirmModalLabel{{ $user->id }}">
+                                                    <i class="bi bi-shield-check me-2"></i>បញ្ជាក់ការផ្លាស់ប្តូរ
+                                                </h5>
+                                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                                            </div>
+
+                                            <div class="modal-body text-center py-4">
+                                                <i class="bi bi-exclamation-circle-fill text-warning fs-1 mb-3 d-block"></i>
+                                                <h5 class="fw-bold mb-3">
+                                                    តើអ្នកពិតជាចង់ Update Role មែនទេ?
+                                                </h5>
+                                                <p class="text-muted mb-1">
+                                                    User:
+                                                    <strong>{{ $user->name }}</strong>
+                                                </p>
+                                                <p class="text-muted mb-0">
+                                                    Current Role:
+                                                    <strong>
+                                                        {{ ucfirst($user->role) }}
+                                                    </strong>
+                                                </p>
+                                            </div>
+
+                                            <div class="modal-footer border-0 justify-content-center pb-4">
+                                                <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">
+                                                    បោះបង់
+                                                </button>
+
+                                                {{-- CONFIRM --}}
+                                                <button type="submit" form="updateRoleForm{{ $user->id }}" class="btn btn-success rounded-pill px-4">
+                                                    <i class="bi bi-check-circle me-1"></i>
+                                                    បាទ/ចាស Update
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        @empty
+
+                        <tr>
+
+                            <td colspan="4" class="text-center text-muted py-5">
+                                <i class="bi bi-inbox fs-3 d-block mb-2"></i>
+                                មិនទាន់មានទិន្នន័យ
+                            </td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+
+            {{-- PAGINATION --}}
+            @if($users->hasPages())
+
+            <div class="d-flex justify-content-between align-items-center p-4 border-top">
+                <div class="text-muted small">
+                    បង្ហាញ {{ $users->firstItem() }}
+                    ដល់ {{ $users->lastItem() }}
+                    នៃ {{ $users->total() }} ទិន្នន័យ
+                </div>
+                <div>
+                    {{ $users->appends(request()->query())->links() }}
+                </div>
+            </div>
+            @endif
         </div>
-
     </div>
-
 </div>
-
-{{-- ========================= --}}
 {{-- STYLE --}}
-{{-- ========================= --}}
 <style>
-/* Overlay with modern blur effect */
-.modal-overlay {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(15, 23, 42, 0.45); 
-    backdrop-filter: blur(8px);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    opacity: 0;
-    transition: opacity 0.25s ease;
+@import url('https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@400;600;700&display=swap');
+
+body {
+    background-color: #f8fafc;
+    font-family: 'Kantumruy Pro', sans-serif;
 }
 
-.modal-overlay.show {
-    display: flex;
-    opacity: 1;
+.table-hover tbody tr:hover {
+    background-color: #f1f5f9;
+    transition: 0.2s;
 }
 
-/* Premium Modal Box Design */
-.modal-box {
-    width: 100%;
-    max-width: 400px;
-    background: #ffffff;
-    border-radius: 24px;
-    padding: 32px 24px;
-    text-align: center;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
-    transform: scale(0.9);
-    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-    margin: 0 16px;
+.modal-content {
+    animation: modalFade 0.3s ease;
 }
 
-.modal-overlay.show .modal-box {
-    transform: scale(1);
-}
+@keyframes modalFade {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
 
-/* Warning Icon Wrapper */
-.modal-icon-wrapper {
-    width: 64px;
-    height: 64px;
-    background: #fef3c7; 
-    color: #d97706; 
-    font-size: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    margin: 0 auto 18px;
-}
-
-/* Typography Khmer Standard */
-.modal-title {
-    font-family: 'Kantumruy Pro', 'Khmer OS Siemreap', sans-serif;
-    font-weight: 700;
-    font-size: 20px;
-    color: #1e293b;
-    margin-bottom: 8px;
-}
-
-.modal-text {
-    font-family: 'Kantumruy Pro', 'Khmer OS Siemreap', sans-serif;
-    font-size: 15px;
-    color: #64748b;
-    line-height: 1.6;
-    margin-bottom: 28px;
-}
-
-/* Buttons Configuration */
-.btn-group-modal {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-}
-
-.btn-modal {
-    flex: 1;
-    padding: 11px 20px;
-    border-radius: 12px;
-    border: none;
-    font-family: 'Kantumruy Pro', 'Khmer OS Siemreap', sans-serif;
-    font-weight: 600;
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-/* Cancel Button */
-.btn-cancel {
-    background: #f1f5f9;
-    color: #475569;
-}
-
-.btn-cancel:hover {
-    background: #e2e8f0;
-    color: #334155;
-}
-
-/* Confirm Button */
-.btn-confirm {
-    background: #0ea5e9; 
-    color: white;
-    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.2);
-}
-
-.btn-confirm:hover {
-    background: #0284c7;
-    box-shadow: 0 6px 16px rgba(2, 132, 199, 0.3);
-    transform: translateY(-1px);
-}
-
-.btn-confirm:active {
-    transform: translateY(0);
-}
-</style>
-
-{{-- ========================= --}}
-{{-- JS --}}
-{{-- ========================= --}}
-<script>
-function openModal(id, name) {
-    const modal = document.getElementById('customModal');
-    
-    // Open modal with smooth fade-in
-    modal.style.display = 'flex';
-    setTimeout(() => {
-        modal.classList.add('show');
-    }, 10);
-
-    // Dynamic Khmer Text
-    document.getElementById('modalText').innerHTML =
-        "តើអ្នកពិតជាចង់ធ្វើបច្ចុប្បន្នភាពតួនាទី (Role) របស់ <strong style='color:#1e293b;'>" + name + "</strong> មែនទេ?";
-
-    // Action Form Submit
-    document.getElementById('confirmBtn').onclick = function () {
-        document.getElementById('form' + id).submit();
-    };
-}
-
-function closeModal() {
-    const modal = document.getElementById('customModal');
-    modal.classList.remove('show');
-    
-    // Wait for transition to end before hidden
-    setTimeout(() => {
-        modal.style.display = 'none';
-    }, 250); 
-}
-
-// Close when clicking outside the modal box (UX Standard)
-function closeModalOnOverlay(event) {
-    if (event.target.id === 'customModal') {
-        closeModal();
+    to {
+        transform: translateY(0);
+        opacity: 1;
     }
 }
-
-/* Auto search with debounce */
-let timeout = null;
-
-document.getElementById('searchInput').addEventListener('keyup', function () {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => {
-        this.closest('form').submit();
-    }, 500);
-});
-</script>
-
+</style>
 @endsection

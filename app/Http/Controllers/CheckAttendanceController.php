@@ -34,7 +34,7 @@ class CheckAttendanceController extends Controller
         }
 
         // រៀបចំលំដាប់ពីថ្មីទៅចាស់ និងធ្វើ Pagination 15 កំណត់ត្រា
-        $attendances = $query->orderBy('scanned_at', 'desc')->paginate(15);
+        $attendances = $query->orderBy('scanned_at', 'desc')->paginate(7);
 
         return view('check_attendances.index', compact('attendances'));
     }
