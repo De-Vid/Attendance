@@ -10,6 +10,7 @@ use App\Http\Controllers\AttendanceSettingController;
 use App\Http\Controllers\AttendanceTypeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CheckAttendanceController;
+use App\Http\Controllers\LeaveController;
 use Illuminate\Support\Facades\Route;
 
 // ─── Public ──────────────────────────────────────────────────────────────────
@@ -78,3 +79,39 @@ Route::post('/users/update-role/{id}', [UserController::class, 'updateRole'])
 Route::get('/check-attendances', [CheckAttendanceController::class, 'index'])
 ->name('check_attendances.index');
 Route::get('/check-attendances/employee/{employee_id}', [CheckAttendanceController::class, 'check'])->name('check_attendances.check');
+
+
+// ================================================================
+//  STAFF Routes
+// ================================================================
+Route::middleware(['auth', 'role:staff'])->prefix('staff')->name('staff.')->group(function () {
+
+    // Dashboard (មានស្រាប់)
+    Route::get('/dashboard', fn() => view('staff.dashboard'))->name('dashboard');
+
+    // ច្បាប់
+    Route::prefix('leaves')->name('leaves.')->group(function () {
+        Route::get('/',           [LeaveController::class, 'staffIndex'])   ->name('index');
+        Route::get('/create',     [LeaveController::class, 'staffCreate'])  ->name('create');
+        Route::post('/',          [LeaveController::class, 'staffStore'])   ->name('store');
+        Route::delete('/{leave}', [LeaveController::class, 'staffDestroy']) ->name('destroy');
+    });
+});
+
+// ================================================================
+//  LEADER Routes
+// ================================================================
+Route::middleware(['auth', 'role:leader'])->prefix('leader')->name('leader.')->group(function () {
+
+    // Dashboard (មានស្រាប់)
+    Route::get('/dashboard', fn() => view('leader.dashboard'))->name('dashboard');
+
+    // ច្បាប់
+    Route::prefix('leaves')->name('leaves.')->group(function () {
+        Route::get('/',                        [LeaveController::class, 'leaderIndex'])   ->name('index');
+        Route::get('/{leave}',                 [LeaveController::class, 'leaderShow'])    ->name('show');
+        Route::post('/{leave}/approve',        [LeaveController::class, 'leaderApprove'])->name('approve');
+        Route::post('/{leave}/reject',         [LeaveController::class, 'leaderReject']) ->name('reject');
+    });
+});
+
