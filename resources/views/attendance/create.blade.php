@@ -23,7 +23,10 @@
             <label for="name" class="form-label">ឈ្មោះបុគ្គលិក</label>
             <input type="text" name="name" class="form-control" placeholder="ឈ្មោះបុគ្គលិក" required>
         </div>
-
+        <div class="col-md-6 mt-2">
+            <label for="salary" class="form-label">ប្រាក់ខែ</label>
+            <input type="number" name="salary" class="form-control" placeholder="Salary" step="0.01" required>
+        </div>
         <div class="col-md-6 mt-2">
             <label for="email" class="form-label">អ៊ីមែល</label>
             <input type="email" name="email" class="form-control" placeholder="Email" required>
@@ -49,10 +52,6 @@
             </select>
         </div>
         <div class="col-md-6 mt-2">
-            <label for="birth_date" class="form-label">ថ្ងៃខែឆ្នាំកំណើត</label>
-            <input type="date" name="birth_date" class="form-control" placeholder="Birth Date">
-        </div>
-        <div class="col-md-6 mt-2">
             <label for="password" class="form-label">ពាក្យសំងាត់</label>
             <input type="password" name="password" class="form-control" placeholder="Password" required>
         </div>
@@ -61,6 +60,10 @@
             <label for="password_confirmation" class="form-label">បញ្ជាក់ពាក្យសំងាត់</label>
             <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm Password"
                 required>
+        </div>
+        <div class="col-md-6 mt-2">
+            <label for="birth_date" class="form-label">ថ្ងៃខែឆ្នាំកំណើត</label>
+            <input type="date" name="birth_date" class="form-control" placeholder="Birth Date">
         </div>
         <div class="col-md-6 mt-2">
             <label for="image" class="form-label">រូបថត</label>

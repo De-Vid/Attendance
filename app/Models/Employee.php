@@ -10,6 +10,7 @@ class Employee extends Model
         'user_id',
         'staff_id',
         'scan_code',
+        'salary',
     ];
 
     public function user()

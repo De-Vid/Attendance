@@ -55,10 +55,10 @@
                 <table class="table table-hover align-middle mb-0">
                     <thead class="table-light text-secondary" style="font-size: 14px;">
                         <tr>
-                            <th class="ps-4 py-3">កូដបុគ្គលិក (Staff ID)</th>
+                            <th class="ps-4 py-3">កូដបុគ្គលិក</th>
                             <th class="py-3">ឈ្មោះ</th>
+                            <th class="py-3">ប្រាក់ខែ</th>
                             <th class="py-3">តួនាទី</th>
-                            <th class="py-3">អ៊ីមែល</th>
                             <th class="py-3 text-center">QR Code ស្កែន</th>
                             <th class="pe-4 py-3 text-center" style="width: 150px;">សកម្មភាព</th>
                         </tr>
@@ -72,13 +72,13 @@
                             <td class="fw-bold text-dark">
                                 {{ $emp->user->name ?? 'N/A' }}
                             </td>
+                            <td class="text-success fw-semibold">
+                                {{ number_format($emp->salary, 2) }} $ 
+                            </td>
                             <td>
                                 <span class="badge bg-light text-dark border px-2 py-1.5 rounded-3 fw-medium">
                                     {{ $emp->user->position->name ?? 'N/A' }}
                                 </span>
-                            </td>
-                            <td class="text-muted small">
-                                {{ $emp->user->email ?? 'N/A' }}
                             </td>
                             <td class="text-center">
                                 <div class="mb-1 d-flex justify-content-center">

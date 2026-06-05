@@ -41,6 +41,7 @@ public function storeEmployee(Request $request)
     $request->validate([
         'staff_id'    => 'required|unique:employees,staff_id',
         'name'        => 'required',
+        'salary'      => 'required|numeric|min:0',
         'email'       => 'required|email|unique:users,email',
         'phone'       => 'required',
         'position_id' => 'required',
@@ -77,6 +78,7 @@ public function storeEmployee(Request $request)
         'user_id'   => $user->id,
         'staff_id'  => $request->staff_id,
         'scan_code' => $request->staff_id . '_' . bin2hex(random_bytes(4)),
+        'salary'    => $request->salary,
     ]);
 
     return redirect()

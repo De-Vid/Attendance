@@ -214,7 +214,7 @@
                             <a href="{{ route(Auth::user()->getDashboardRoute()) }}"
                                 class="nav-link {{ request()->routeIs('*.dashboard') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-chart-line"></i>
-                                <p class="fw-bold">Dashboard</p>
+                                <p class="fw-bold">ផ្ទាំងគ្រប់គ្រង</p>
                             </a>
                         </li>
 
@@ -223,7 +223,7 @@
                             <a href="{{ route('check_attendances.index') }}"
                                 class="nav-link {{ request()->routeIs('check_attendances.*') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-calendar-check"></i>
-                                <p class="fw-bold">Check Attendance</p>
+                                <p class="fw-bold">ពិនិត្យមើលវត្តមាន</p>
                             </a>
                         </li>
 
@@ -231,7 +231,7 @@
                             <a href="{{ route('employees.index') }}"
                                 class="nav-link {{ request()->routeIs('employees.*') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-user-friends"></i>
-                                <p class="fw-bold">Employees</p>
+                                <p class="fw-bold">បុគ្គលិកទាំងអស់</p>
                             </a>
                         </li>
 
@@ -239,7 +239,7 @@
                             <a href="{{ route('positions.index') }}"
                                 class="nav-link {{ request()->routeIs('positions.*') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-briefcase"></i>
-                                <p class="fw-bold">Positions</p>
+                                <p class="fw-bold">មុខតំណែង</p>
                             </a>
                         </li>
 
@@ -247,7 +247,7 @@
                             <a href="{{ route('attendance-settings.index') }}"
                                 class="nav-link {{ request()->routeIs('attendance-settings.*') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-clock"></i>
-                                <p class="fw-bold">Set Time</p>
+                                <p class="fw-bold">កំណត់ម៉េាង</p>
                             </a>
                         </li>
 
@@ -255,7 +255,7 @@
                             <a href="{{ route('attendance_types.index') }}"
                                 class="nav-link {{ request()->routeIs('attendance_types.*') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-user-clock"></i>
-                                <p class="fw-bold">Set Day</p>
+                                <p class="fw-bold">កំណត់ថ្ងៃ</p>
                             </a>
                         </li>
 
@@ -263,7 +263,7 @@
                             <a href="{{ route('users.index') }}"
                                 class="nav-link {{ request()->routeIs('users.*') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-user"></i>
-                                <p class="fw-bold">Users</p>
+                                <p class="fw-bold">តួនាទីក្នុងប្រព័ន្ធ</p>
                             </a>
                         </li>
                         @endif

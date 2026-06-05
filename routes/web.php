@@ -27,17 +27,17 @@ Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth')->
 
 // ─── Admin ────────────────────────────────────────────────────────────────────
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
-        Route::get('/dashboard', [AdminDashboard::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [AdminDashboard::class, 'index'])->name('dashboard');
 });
 
 // ─── Leader ───────────────────────────────────────────────────────────────────
 Route::middleware(['auth', 'role:leader'])->prefix('leader')->name('leader.')->group(function () {
-        Route::get('/dashboard', [LeaderDashboard::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [LeaderDashboard::class, 'index'])->name('dashboard');
 });
 
 // ─── Staff ────────────────────────────────────────────────────────────────────
 Route::middleware(['auth', 'role:staff'])->prefix('staff')->name('staff.')->group(function () {
-        Route::get('/dashboard', [StaffDashboard::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [StaffDashboard::class, 'index'])->name('dashboard');
 });
 
 // ─── Employees ────────────────────────────────────────────────────────────────────
@@ -71,13 +71,11 @@ Route::resource('attendance_types', AttendanceTypeController::class);
 // ─── UserController ────────────────────────────────────────────────────────────────────
 // Added ->name('users.index') at the end here:
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
-Route::post('/users/update-role/{id}', [UserController::class, 'updateRole'])
-->name('users.updateRole');
+Route::post('/users/update-role/{id}', [UserController::class, 'updateRole'])->name('users.updateRole');
 
 // ─── 
 // CheckAttendance─────────────────────────────────────
-Route::get('/check-attendances', [CheckAttendanceController::class, 'index'])
-->name('check_attendances.index');
+Route::get('/check-attendances', [CheckAttendanceController::class, 'index'])->name('check_attendances.index');
 Route::get('/check-attendances/employee/{employee_id}', [CheckAttendanceController::class, 'check'])->name('check_attendances.check');
 
 
@@ -91,10 +89,10 @@ Route::middleware(['auth', 'role:staff'])->prefix('staff')->name('staff.')->grou
 
     // ច្បាប់
     Route::prefix('leaves')->name('leaves.')->group(function () {
-        Route::get('/',           [LeaveController::class, 'staffIndex'])   ->name('index');
-        Route::get('/create',     [LeaveController::class, 'staffCreate'])  ->name('create');
-        Route::post('/',          [LeaveController::class, 'staffStore'])   ->name('store');
-        Route::delete('/{leave}', [LeaveController::class, 'staffDestroy']) ->name('destroy');
+        Route::get('/',[LeaveController::class, 'staffIndex'])   ->name('index');
+        Route::get('/create',[LeaveController::class, 'staffCreate'])  ->name('create');
+        Route::post('/',[LeaveController::class, 'staffStore'])   ->name('store');
+        Route::delete('/{leave}',[LeaveController::class, 'staffDestroy']) ->name('destroy');
     });
 });
 
@@ -108,10 +106,10 @@ Route::middleware(['auth', 'role:leader'])->prefix('leader')->name('leader.')->g
 
     // ច្បាប់
     Route::prefix('leaves')->name('leaves.')->group(function () {
-        Route::get('/',                        [LeaveController::class, 'leaderIndex'])   ->name('index');
-        Route::get('/{leave}',                 [LeaveController::class, 'leaderShow'])    ->name('show');
-        Route::post('/{leave}/approve',        [LeaveController::class, 'leaderApprove'])->name('approve');
-        Route::post('/{leave}/reject',         [LeaveController::class, 'leaderReject']) ->name('reject');
+        Route::get('/',[LeaveController::class, 'leaderIndex'])   ->name('index');
+        Route::get('/{leave}',[LeaveController::class, 'leaderShow'])    ->name('show');
+        Route::post('/{leave}/approve',[LeaveController::class, 'leaderApprove'])->name('approve');
+        Route::post('/{leave}/reject',[LeaveController::class, 'leaderReject']) ->name('reject');
     });
 });
 
